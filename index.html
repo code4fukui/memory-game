@@ -12,7 +12,8 @@ onload = async () => {
 
   const fld = add("div");
   fld.style.display = "inline-grid";
-  fld.style.width = "min(100%, 800px)";
+  fld.style.direction = "rtl"; // from right
+  fld.style.width = "min(100%, 500px)";
   fld.style.marginBottom = "2em";
   const w = 4;
   //fld.style.gridTemplateRows = "1fr ".repeat(w);
@@ -25,7 +26,7 @@ onload = async () => {
     p.style.height = "0px";
     p.style.margin = "5%";
     p.style.paddingBottom = "90%";
-    p.style.fontSize = "min(5vw, 40px)";
+    p.style.fontSize = "min(5vw, 25px)";
     p.style.lineHeight = "4.5";
     p.style.textAlign = "center";
     //p.style.transition = "transform 0.8s";
@@ -57,11 +58,12 @@ onload = async () => {
       "text-align": "center",
     },
     ".mes": {
-      "font-size": "min(5vw, 34px)",
-      "height": "2em",
+      "font-size": "min(5vw, 26px)",
+      "height": "1.5em",
     },
     "h1": {
       "font-size": "min(8vw, 50px)",
+      "margin": "0.2em",
     },
   });
   hr();
