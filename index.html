@@ -1,0 +1,98 @@
+<meta charset="utf-8"><script type="module">
+import { h1, add, create, style, hr, link } from "https://js.sabae.cc/stdom.js";
+import { sleep } from "https://js.sabae.cc/sleep.js";
+import { rnd } from "https://js.sabae.cc/rnd.js";
+
+onload = async () => {
+  // setup
+  h1("メモリになってみよう");
+  const qdiv = add("div");
+  const adiv = add("div");
+  adiv.className = qdiv.className = "mes";
+
+  const fld = add("div");
+  fld.style.display = "inline-grid";
+  fld.style.width = "min(100%, 800px)";
+  fld.style.marginBottom = "2em";
+  const w = 4;
+  //fld.style.gridTemplateRows = "1fr ".repeat(w);
+  fld.style.gridTemplateColumns = `repeat(${w}, 1fr)`; //"1fr ".repeat(w);
+  fld.style.gridAutoRows = "1fr";
+  fld.className = "squaregrid";
+  for (let i = 0; i < w * w; i++) {
+    const p = create("div", fld);
+    p.style.borderRadius = "50%";
+    p.style.height = "0px";
+    p.style.margin = "5%";
+    p.style.paddingBottom = "90%";
+    p.style.fontSize = "min(5vw, 40px)";
+    p.style.lineHeight = "4.5";
+    p.style.textAlign = "center";
+    //p.style.transition = "transform 0.8s";
+    p.style.transition = "background-color 0.3s, color 0.3s";
+    p.style.backfaceVisibility = "hidden";
+    p.style.border = "1px solid black";
+    //p.style.height = p.style.width
+    //p.style.backgroundColor = "#333";
+    //p.style.color = "white";
+    p.textContent = 1 << i;
+    p.addEventListener("click", () => {
+      //p.classList.toggle("flip");
+      p.classList.toggle("selected");
+      const m = getValue();
+      adiv.textContent = "今のメモリ状態：" + m;
+    });
+  }
+  style({
+    ".flip": {
+      "transform": "rotateY(180deg)",
+      "background-color": "#eee",
+      "color": "gray",
+    },
+    ".selected": {
+      "background-color": "black",
+      "color": "white",
+    },
+    "body": {
+      "text-align": "center",
+    },
+    ".mes": {
+      "font-size": "min(5vw, 34px)",
+      "height": "2em",
+    },
+    "h1": {
+      "font-size": "min(8vw, 50px)",
+    },
+  });
+  hr();
+  link("App CC BY 福野泰介", "https://fukuno.jig.jp/3300")
+  //
+  const getValue = () => {
+    return Array.from(fld.querySelectorAll("div")).reduce((pre, d) => pre + (d.classList.contains("selected") ? parseInt(d.textContent) : 0), 0);
+  };
+  const waitChanged = async () => {
+    return new Promise((resolve) => {
+      fld.querySelectorAll("div").forEach(d => d.onclick = () => {
+        resolve(getValue());
+      });
+    });
+  };
+
+  // main
+  let bk = 0;
+  for (let i = 0; i < 10; i++) {
+    const max = i < 2 ? 9 : i < 5 ? 99: i < 7 ? 999: i < 9 ? 9999 : 65535;
+    const n = rnd(max) + 1;
+    if (n == bk) { // 前回と被ったらやりなおし
+      i--;
+      continue;
+    }
+    bk = n;
+    qdiv.textContent = n + "をおぼえてね";
+    while (n != await waitChanged());
+    qdiv.textContent = n + "、おぼえた！";
+    await sleep(1500);
+  }
+  qdiv.textContent = "ぜんぶできた！";
+};
+</script>
