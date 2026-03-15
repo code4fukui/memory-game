@@ -1,5 +1,7 @@
 # memory-game
 
+> 日本語のREADMEはこちらです: [README.ja.md](README.ja.md)
+
 A simple memory game built with JavaScript.
 
 ## Demo
