@@ -16,4 +16,4 @@ You can play the game at https://code4fukui.github.io/memory-game/
 Open the `index.html` file in a web browser to play the game.
 
 ## License
-This project is licensed under the MIT License.
+MIT License — see [LICENSE](LICENSE).
